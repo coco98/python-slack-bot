@@ -1,0 +1,4 @@
+- args:
+    sql: ALTER TABLE "comments" ADD FOREIGN KEY ("article_id") REFERENCES "article"
+      ("id")
+  type: run_sql

@@ -1,0 +1,3 @@
+requests
+slackclient
+websocket-client==0.40.0

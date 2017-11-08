@@ -18,3 +18,20 @@ remotes:
     <<: {}                   # DO NOT edit this line
     
     # Add output of `hasura conf generate-remote` below this line
+    '{{ cluster.metadata.namespaces.user }}.app':
+      app:
+        dockerfile: microservices/app/Dockerfile
+        path: microservices/app
+    # Add new remotes here above this line
+    # Example:
+    
+    # remote-name:
+    #   namespace.service-name:
+    #     container-name:
+    #       path: services/app
+    #       dockerfile: services/app/Dockerfile
+
+    '{{ cluster.metadata.namespaces.user }}.slack-bot':
+      slack-bot:
+        dockerfile: microservices/slack-bot/Dockerfile
+        path: microservices/slack-bot

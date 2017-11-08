@@ -1,55 +1,44 @@
-# base
+# python-slack-bot
 
-A blank template to be used as a starting point to build projects on Hasura. A "project" is a "gittable" directory in the file system, which captures all the information regarding clusters, services and migrations. It can also be used to keep source code for custom services that you write.
+This project demos a Slack bot on Hasura. It has been forked from the `hello-python-flask` project.
 
-## Files and Directories
 
-The project (a.k.a. project directory) has a particular directory structure and it has to be maintained strictly, else `hasura` cli would not work as expected. A representative project is shown below:
+## Introduction
+
+This quickstart project comes with the following by default:
+1. A basic hasura project
+2. Three tables `article`, `author` and `comments` with some dummy data
+3. A Flask app having the endpoints: `/get_articles` to fetch a list of articles, and `/comment` to comment on an article and post the new comment to a Slack channel
+4. A Slack bot which can post a new comment to the `comments` table when invoked using a message on Slack
+
+## Description
+
+A detailed description of the base project and its usage is available in the Readme of the `hello-python-flask` project.
+
+This project adds a `comments` table and two Slack bots to the base project.
+
+The `comment` table essentiallly maps comments to articles. There is also a flask endpoint `/comment/<article_id>` to which a comment can be POSTed.
+
+There are two Slack bots (i.e. Slack API uses):
+
+1. Whenever the `/comment/<article_id>` endpoint is called with the article ID and the comment, the data is inserted into the `comments` table and the new comment is also posted to a Slack channel. For example, to post a comment for `article_id` 12:
+
+```http
+
+POST /comment/12
+Content-Type application/json
+
+{
+  "comment" : "Interesting article"
+}
 
 ```
-.
-├── hasura.yaml
-├── clusters.yaml
-├── conf
-│   ├── authorized-keys.yaml
-│   ├── auth.yaml
-│   ├── ci.yaml
-│   ├── domains.yaml
-│   ├── filestore.yaml
-│   ├── gateway.yaml
-│   ├── http-directives.conf
-│   ├── notify.yaml
-│   ├── postgres.yaml
-│   ├── routes.yaml
-│   └── session-store.yaml
-├── migrations
-│   ├── 1504788327_create_table_userprofile.down.yaml
-│   ├── 1504788327_create_table_userprofile.down.sql
-│   ├── 1504788327_create_table_userprofile.up.yaml
-│   └── 1504788327_create_table_userprofile.up.sql
-└── microservices 
-    ├── adminer
-    │   └── k8s.yaml
-    └── flask
-        ├── src/
-        ├── k8s.yaml
-        └── Dockerfile
-```
+A message will be posted to the channel defined in the code.
 
-### `hasura.yaml`
+This bot uses a simple Slack API call to post the  message.
 
-This file contains some metadata about the project, namely a name, description and some keywords. Also contains `platformVersion` which says which Hasura platform version is compatible with this project.
+2. An article can be commented upon by summoning the bot with the article ID and the comment. For example: `articlebot 12 Interesting article` will post a comment for article number 12 saying "Interesting article". This bot uses the Real Time Event feed from Slack to watch for comments and take action if a set of conditions are met.
 
-### `clusters.yaml`
+## Usage
 
-Info about the clusters added to this project can be found in this file. Each cluster is defined by it's name allotted by Hasura. While adding the cluster to the project you are prompted to give an alias, which is just hasura by default. The `kubeContext` mentions the name of kubernetes context used to access the cluster, which is also managed by hasura. The `config` key denotes the location of cluster's metadata on the cluster itself. This information is parsed and cluster's metadata is appended while conf is rendered. `data` key is for holding custom variables that you can define.
-
-```yaml
-- name: h34-ambitious93-stg
-  alias: hasura
-  kubeContext: h34-ambitious93-stg
-  config:
-    configmap: controller-conf
-    namespace: hasura
-  data: null  
-```
+Make sure you insert the Slack API Token in the `env` section in `k8s.yaml` in each of `app` and `slack-bot`. Deploy the project using the standard `git push` method.
