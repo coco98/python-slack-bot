@@ -3,5 +3,5 @@
     configmap: controller-conf
     namespace: hasura
   data: null
-  kubeContext: h34-bloom61-stg
-  name: h34-bloom61-stg
+  kubeContext: doodle44
+  name: doodle44
