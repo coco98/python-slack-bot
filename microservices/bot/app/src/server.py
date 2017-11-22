@@ -107,4 +107,5 @@ def storeText(text, responseUrl):
     respObj = resp.json()
     print(respObj)
     id = respObj["returning"][0]["id"]
+    print(id)
     return id
