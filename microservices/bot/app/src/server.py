@@ -6,7 +6,6 @@ import json
 @app.route('/', methods=['POST'])
 def event():
     try:
-
         data = request.form
         print ("===============================================================");
         print (data)
@@ -17,7 +16,7 @@ def event():
     except Exception as e:
         print(e)
         raise
-    return (sendChoice())
+    return (json.dumps(sendChoice()))
 
 @app.route('/test', methods=['GET'])
 def test():
