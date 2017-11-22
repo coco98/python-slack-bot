@@ -3,5 +3,5 @@
     configmap: controller-conf
     namespace: hasura
   data: null
-  kubeContext: doodle44
-  name: doodle44
+  kubeContext: crankshaft65
+  name: crankshaft65

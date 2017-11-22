@@ -5,9 +5,9 @@ items:
   metadata:
     creationTimestamp: null
     labels:
-      app: slack-bot
+      app: bot
       hasuraService: custom
-    name: slack-bot
+    name: bot
     namespace: '{{ cluster.metadata.namespaces.user }}'
   spec:
     replicas: 1
@@ -16,19 +16,21 @@ items:
       metadata:
         creationTimestamp: null
         labels:
-          app: slack-bot
+          app: bot
       spec:
         containers:
         - image: hasura/hello-world:latest
+          env:
+          - name: PRODUCTION
+            value: "true"
+          - name: SLACK_TOKEN
+            value: <your-slack-token>
           imagePullPolicy: IfNotPresent
-          name: slack-bot
+          name: bot
           ports:
           - containerPort: 8080
             protocol: TCP
           resources: {}
-          env:
-          - name: SLACK_TOKEN
-            value: <your-slack-token>
         securityContext: {}
         terminationGracePeriodSeconds: 0
   status: {}
@@ -37,9 +39,9 @@ items:
   metadata:
     creationTimestamp: null
     labels:
-      app: slack-bot
+      app: bot
       hasuraService: custom
-    name: slack-bot
+    name: bot
     namespace: '{{ cluster.metadata.namespaces.user }}'
   spec:
     ports:
@@ -47,7 +49,7 @@ items:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: slack-bot
+      app: bot
     type: ClusterIP
   status:
     loadBalancer: {}
