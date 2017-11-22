@@ -101,7 +101,7 @@ def storeText(text, responseUrl):
     # Setting headers
     headers = {
         "Content-Type": "application/json",
-        "X-Hasura-User-Id": 1,
+        "X-Hasura-User-Id": "1",
         "X-Hasura-Role": "Admin"
     }
 
