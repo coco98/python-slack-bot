@@ -12,6 +12,7 @@ def event():
         data = request.form.to_dict()
         print (data)
         receivedToken = data["token"]
+        print (token + "!!!!!!!!" + receivedToken)
         if (receivedToken == token):
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
@@ -72,6 +73,7 @@ def sendChoice(id):
 
     response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
     print(response.text)
+    return
 
 def storeText(text, responseUrl):
     url = "https://data.hasura/v1/query"
