@@ -1,0 +1,7 @@
+- args:
+    sql: CREATE TABLE "slack_messages"(message text NOT NULL, response_url text NOT
+      NULL, id serial NOT NULL, PRIMARY KEY (id) )
+  type: run_sql
+- args:
+    name: slack_messages
+  type: add_existing_table_or_view

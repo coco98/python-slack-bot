@@ -24,7 +24,10 @@ items:
           - name: PRODUCTION
             value: "true"
           - name: SLACK_TOKEN
-            value: <your-slack-token>
+            valueFrom:
+              secretKeyRef:
+                key: slack.token
+                name: hasura-secrets
           imagePullPolicy: IfNotPresent
           name: bot
           ports:
