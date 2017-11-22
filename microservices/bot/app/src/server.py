@@ -12,10 +12,7 @@ def event():
         data = request.form.to_dict()
         print(data)
         receivedToken = data["token"]
-        print("Received Token: " + receivedToken)
-        print("asdasdad Token: " + token)
         if (receivedToken==token):
-            print("TOken Valid")
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id)
@@ -107,6 +104,7 @@ def storeText(text, responseUrl):
 
     # Make the query and store response in resp
     resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
-    print (resp.content)
-    id = resp.content["returning"][0]["id"]
+    respObj = resp.json()
+    print(respObj)
+    id = respObj["returning"][0]["id"]
     return id
