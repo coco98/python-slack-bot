@@ -15,7 +15,7 @@ def event():
         if (receivedToken==token):
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
-            sendChoice(id)
+            sendChoice(id, data["response_url"])
             return "Waiting for response"
         else:
             return "Invalid Token"
@@ -39,7 +39,7 @@ def confirm():
     return "ok"
 
 
-def sendChoice(id):
+def sendChoice(id, responseUrl):
     payload = {
         "text": "Are you sure you want to send a message?",
         "attachments": [
