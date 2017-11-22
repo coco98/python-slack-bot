@@ -59,14 +59,14 @@ def sendChoice(id, responseUrl):
                         "name": "choice",
                         "text": "Yep",
                         "type": "button",
-                        "value": "y"+str(id)
+                        "value": id
                     },
                     {
                         "name": "choice",
                         "text": "Nope",
                         "type": "button",
                         "value": "no",
-                        "id": "n"+str(id)
+                        "id": id
                     }
                 ]
             }
