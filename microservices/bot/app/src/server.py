@@ -11,10 +11,8 @@ def event():
     try:
         data = request.form.to_dict()
         print (data)
+        receivedToken = data["token"]
         if (receivedToken==token):
-            print("Token Valid")
-            print("===========")
-            print(" ")
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id)
