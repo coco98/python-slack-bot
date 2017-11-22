@@ -152,6 +152,7 @@ def fetchAndSend(id):
     sendMessage(message, responseUrl)
 
 def sendMessage(message, responseUrl):
+    url = "https://hooks.slack.com/services/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"
     payload = {
         "text": message
     }
@@ -159,6 +160,6 @@ def sendMessage(message, responseUrl):
         'content-type': "application/json",
     }
 
-    response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
+    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
     print(response.text)
     return "Message Sent"
