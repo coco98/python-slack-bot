@@ -27,14 +27,16 @@ def test():
 def confirm():
     data = request.form
     print (data)
-    return something
+    return ok
 
 def sendChoice():
     url = "https://hooks.slack.com/services/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"
-    payload = {"text":"yo sup?"}
+    payload = {
+        "text": "This is a line of text.\nAnd this is another one."
+    }
     headers = {
         'content-type': "application/json",
     }
 
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
     print(response.text)
