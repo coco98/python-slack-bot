@@ -101,6 +101,8 @@ def storeText(text, responseUrl):
     # Setting headers
     headers = {
         "Content-Type": "application/json"
+        "X-Hasura-Id":1
+        "X-Hasura-Role":"Admin"
     }
 
     # Make the query and store response in resp
