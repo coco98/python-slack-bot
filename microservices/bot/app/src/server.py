@@ -12,37 +12,23 @@ def event():
         print ("===============================================================")
         receivedToken = data["token"]
         receivedTeamId = data["team_id"]
-        pass
+        sendChoice()
+        
     except Exception as e:
         print(e)
         raise
-    return (json.dumps(sendChoice()))
+    return "OK"
 
 @app.route('/test', methods=['GET'])
 def test():
     return "Running"
 
 def sendChoice():
-    choiceResponse = {
-        "text": "Are you freaking serious you want to send this message?",
-        "attachments": [
-            {
-                "text": "Please decide",
-                "fallback": "You are unable to choose a game",
-                "callback_id": "wopr_game",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "actions": [
-                    {
-                        "confirm": {
-                            "title": "Are you sure?",
-                            "text": "Are you really sure?",
-                            "ok_text": "Yes",
-                            "dismiss_text": "No"
-                        }
-                    }
-                ]
-            }
-        ]
+    url = "https://hooks.slack.com/services/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"
+    choiceResponse = "{\n        \"text\": \"Are you freaking serious you want to send this message?\",\n        \"attachments\": [\n            {\n                \"text\": \"Please decide\",\n                \"fallback\": \"You are unable to choose a game\",\n                \"callback_id\": \"wopr_game\",\n                \"color\": \"#3AA3E3\",\n                \"attachment_type\": \"default\",\n                \"actions\": [\n                    {\n                        \"confirm\": {\n                            \"title\": \"Are you sure?\",\n                            \"text\": \"Are you really sure?\",\n                            \"ok_text\": \"Yes\",\n                            \"dismiss_text\": \"No\"\n                        }\n                    }\n                ]\n            }\n        ]\n    }"
+    headers = {
+        'content-type': "application/json",
     }
-    return choiceResponse
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
