@@ -28,6 +28,11 @@ items:
               secretKeyRef:
                 key: slack.token
                 name: hasura-secrets
+          - name: BOT_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: bot.access.token
+                name: hasura-secrets
           imagePullPolicy: IfNotPresent
           name: bot
           ports:

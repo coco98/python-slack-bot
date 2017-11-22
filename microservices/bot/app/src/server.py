@@ -4,7 +4,8 @@ import requests
 import json
 import os
 
-token = os.environ['SLACK_TOKEN']
+slackToken = os.environ['SLACK_TOKEN']
+botAccessToken = os.environ['BOT_ACCESS_TOKEN']
 
 @app.route('/test', methods=['GET'])
 def test():
@@ -16,7 +17,7 @@ def event():
         data = request.form.to_dict()
         print(data)
         receivedToken = data["token"]
-        if (receivedToken==token):
+        if (receivedToken==slackToken):
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id, data["response_url"])
@@ -37,9 +38,10 @@ def confirm():
     print (data)
     print("===============================")
     receivedToken = data["token"]
-    if (receivedToken == token):
+    channel = data["channel"]["id"]
+    if (receivedToken == slackToken):
         if ("value" in data["actions"][len(data["actions"])-1]):
-            fetchAndSend(data["actions"][len(data["actions"])-1]["value"])
+            fetchAndSend(data["actions"][len(data["actions"])-1]["value"], channel)
             return "Message Sent"
         else:
             return "Ok :confused:"
@@ -58,17 +60,15 @@ def sendChoice(id, responseUrl):
                 "attachment_type": "default",
                 "actions": [
                     {
-                        "name": "choice",
+                        "name": "yes",
                         "text": "Yep",
                         "type": "button",
                         "value": id
                     },
                     {
-                        "name": "choice",
+                        "name": "no",
                         "text": "Nope",
                         "type": "button",
-                        "value": "no",
-                        "id": id
                     }
                 ]
             }
@@ -115,7 +115,7 @@ def storeText(text, responseUrl):
     print(id)
     return id
 
-def fetchAndSend(id):
+def fetchAndSend(id, channel):
     url = "http://data.hasura/v1/query"
 
     requestPayload = {
@@ -149,12 +149,14 @@ def fetchAndSend(id):
     responseUrl = respObj[0]["response_url"]
     print (message)
     print (responseUrl)
-    sendMessage(message, responseUrl)
+    sendMessage(message, channel)
 
-def sendMessage(message, responseUrl):
-    url = "https://hooks.slack.com/services/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"
+def sendMessage(message, channel):
+    url = "https://slack.com/api/chat.postMessage"
     payload = {
-        "text": message
+        "token": botAccessToken,
+        "text": message,
+        "channel": channel
     }
     headers = {
         'content-type': "application/json",
