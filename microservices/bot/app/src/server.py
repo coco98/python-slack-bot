@@ -13,6 +13,8 @@ def event():
         print ("===============================================================");
         print (DATA.decode());
         print ("===============================================================");
+        print (DATA.decode().token)
+        print ("===============================================================");
         output = json.loads(DATA.decode())
         print("Topic Recieved: " + output["topic"]);
         receivedToken = output["token"]
