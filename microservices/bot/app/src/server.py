@@ -144,7 +144,7 @@ def fetchAndSend(id):
     resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
     respObj = resp.json()
     print(respObj)
-    message = respObj[0][""]
+    message = respObj[0]["message"]
     responseUrl = respObj[0]["response_url"]
     print (message)
     print (responseUrl)
