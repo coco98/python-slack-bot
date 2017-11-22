@@ -37,8 +37,8 @@ def confirm():
     print("===============================")
     receivedToken = data["token"]
     if (receivedToken == token):
-        if (data["actions"][len(data["actions"])-1]["value"] == "yes"):
-            fetchAndSend(data["actions"][len(data["actions"])-1]["id"])
+        if (data["actions"][len(data["actions"])-1]["value"][0] == "y"):
+            fetchAndSend(data["actions"][len(data["actions"])-1]["value"][1:])
         else:
             return "Ok :confused:"
         
@@ -59,15 +59,14 @@ def sendChoice(id, responseUrl):
                         "name": "choice",
                         "text": "Yep",
                         "type": "button",
-                        "value": "yes",
-                        "id": id
+                        "value": "y"+id,
                     },
                     {
                         "name": "choice",
                         "text": "Nope",
                         "type": "button",
                         "value": "no",
-                        "id": id
+                        "id": "n"+id
                     }
                 ]
             }
