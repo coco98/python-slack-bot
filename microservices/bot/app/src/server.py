@@ -13,7 +13,7 @@ def event():
         receivedToken = data["token"]
         receivedTeamId = data["team_id"]
         sendChoice()
-        
+
     except Exception as e:
         print(e)
         raise
@@ -30,5 +30,5 @@ def sendChoice():
         'content-type': "application/json",
     }
 
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, data=choiceResponse, headers=headers)
     print(response.text)
