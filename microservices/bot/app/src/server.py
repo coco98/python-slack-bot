@@ -12,6 +12,8 @@ def event():
         data = request.form.to_dict()
         print(data)
         receivedToken = data["token"]
+        print("Received Token: " + receivedToken)
+        print("asdasdad Token: " + token)
         if (receivedToken==token):
             print("TOken Valid")
             receivedText= data["text"]
@@ -78,7 +80,7 @@ def sendChoice(id):
     return
 
 def storeText(text, responseUrl):
-    url = "https://data.hasura/v1/query"
+    url = "http://data.hasura/v1/query"
 
     requestPayload = {
         "type": "insert",
