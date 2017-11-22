@@ -29,44 +29,31 @@ def confirm():
     print ("================")
     print (data)
     print ("================")
-    return ok
+    return "ok"
 
 def sendChoice():
     url = "https://hooks.slack.com/services/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"
     payload = {
-        "text": "Would you like to play a game?",
+        "text": "Are you sure you want to send a message?",
         "attachments": [
             {
-                "text": "Choose a game to play",
-                "fallback": "You are unable to choose a game",
-                "callback_id": "wopr_game",
+                "text": "Please decide",
+                "fallback": "You are indecisive",
+                "callback_id": "message_confirmation",
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "actions": [
                     {
-                        "name": "game",
-                        "text": "Chess",
+                        "name": "choice",
+                        "text": "Nope",
                         "type": "button",
-                        "value": "chess"
+                        "value": "no"
                     },
                     {
-                        "name": "game",
-                        "text": "Falken's Maze",
+                        "name": "choice",
+                        "text": "Yep",
                         "type": "button",
-                        "value": "maze"
-                    },
-                    {
-                        "name": "game",
-                        "text": "Thermonuclear War",
-                        "style": "danger",
-                        "type": "button",
-                        "value": "war",
-                        "confirm": {
-                            "title": "Are you sure?",
-                            "text": "Wouldn't you prefer a good game of chess?",
-                            "ok_text": "Yes",
-                            "dismiss_text": "No"
-                        }
+                        "value": "yes"
                     }
                 ]
             }
