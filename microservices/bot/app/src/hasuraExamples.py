@@ -29,13 +29,10 @@ def echo():
         }
     }
 
-    print('query:', json.dumps(query))
-    print(dataUrl)
+    # response = requests.post( dataUrl, data = json.dumps(query), headers = dataHeaders)
+    # print(response.json())
 
-    response = requests.post( dataUrl, data = json.dumps(query), headers = dataHeaders)
-    print(response.json())
-
-    print('posting to slack')
+    print('replying to command')
     sc_msg = 'New comment on article {} \'{}\''.format(article_id, comment[:50] + (comment[50:] and '...'))
     slack_post('#general', sc_msg)
 

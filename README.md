@@ -1,50 +1,89 @@
 # python-slack-bot
 
-This project demos a Slack bot on Hasura. It adds a Slack functionality to the `hello-python-flask` project.
+This is a simple slackbot that responds to slash commands and uses message buttons.
+
+This is the fastest way to deploy a slackbot because slack callbacks require
+HTTPS URLs with valid SSL certificates, which Hasura generates automatically :)
+
+Features:
+
+1. Receive command
+2. Insert command data in the database using the Hasura data APIs
+3. Echo the same output as a message only the user can see, with a confirm message button
+4. If the user clicks on the confirm button, display the message to the whole channel
+
+This slack bot builds on top the following slack APIs:
+
+1. [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
+2. [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
+3. [https://api.slack.com/interactive-messages](https://api.slack.com/interactive-messages)
 
 
-## Description
+#### TODO: Add flowchart diagram here
 
-This project is built upon the `hello-python-flask` quickstart project.
+### Callbacks
 
-A detailed description of the base project and its usage is available in its README.
+#### 1. slash command callback request URL
+ ```http
+ POST /echo
+ Content-Type application/x-www-form-urlencoded
 
-This project adds a `comments` table and two Slack API uses to the base project.
+ token=gIkuvaNzQIHg97ATvDxqgjtO
+ team_id=T0001
+ team_domain=example
+ channel_id=C2147483705
+ channel_name=test
+ user_id=U2147483697
+ user_name=Steve
+ command=/weather
+ text=94070
+ ```
 
-The `comments` table essentiallly maps comments to articles. There is also a Flask endpoint `/comment/<article_id>` to which a comment can be POSTed.
-Along with inserting the comment into the database, it also posts the comment to a Slack channel.
+As taken from: [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
 
-There are two Slack bots (i.e. Slack API uses):
+This callback will take the message text and save it in the database.
+It will also reply to the user asking the user to confirm if the user wants to paste the to everyone in the current channel
 
-1. Whenever the `/comment/<article_id>` endpoint is called with the article ID and the comment, the data is inserted into the `comments` table and the new comment is also posted to a Slack channel. For example, to post a comment for `article_id` 12:
+#### 2. Interactive message callback request URL
 
-    ```http
+ ```http
+POST /echo
+Content-Type application/x-www-form-urlencoded
 
-    POST /comment/12
-    Content-Type application/json
-
+payload=
+{
+  "actions": [
     {
-      "comment" : "Interesting article"
+      "name": "recommend",
+      "value": "recommend",
+      "type": "button"
     }
+  ],
+  "callback_id": "comic_1234_xyz",
+  "team": {
+    "id": "T47563693",
+    "domain": "watermelonsugar"
+  },
+  "channel": {
+    "id": "C065W1189",
+    "name": "forgotten-works"
+  },
+  "user": {
+    "id": "U045VRZFT",
+    "name": "brautigan"
+  },
+  "action_ts": "1458170917.164398",
+  "message_ts": "1458170866.000004",
+  "attachment_id": "1",
+  "token": "xAB3yVzGS4BQ3O9FACTa8Ho4",
+  "original_message": {"text":"New comic book alert!","attachments":[{"title":"The Further Adventures of Slackbot","fields":[{"title":"Volume","value":"1","short":true},{"title":"Issue","value":"3","short":true}],"author_name":"Stanford S. Strickland","author_icon":"https://api.slack.comhttps://a.slack-edge.com/bfaba/img/api/homepage_custom_integrations-2x.png","image_url":"http://i.imgur.com/OJkaVOI.jpg?1"},{"title":"Synopsis","text":"After @episod pushed exciting changes to a devious new branch back in Issue 1, Slackbot notifies @don about an unexpected deploy..."},{"fallback":"Would you recommend it to customers?","title":"Would you recommend it to customers?","callback_id":"comic_1234_xyz","color":"#3AA3E3","attachment_type":"default","actions":[{"name":"recommend","text":"Recommend","type":"button","value":"recommend"},{"name":"no","text":"No","type":"button","value":"bad"}]}]},
+  "response_url": "https://hooks.slack.com/actions/T47563693/6204672533/x7ZLaiVMoECAW50Gw1ZYAXEM",
+  "trigger_id": "13345224609.738474920.8088930838d88f008e0"
+}
+```
 
-    ```
-    A message will be posted to the channel defined in the code.
+This structure is based on: [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
 
-    This bot uses a simple Slack API call to post the  message.
+### Slack configuration required
 
-
-2. An article can be commented upon by summoning the bot with the article ID and the comment.
-
-   For example: `articlebot 12 Interesting article` will post a comment for article number 12 saying "Interesting article".
-
-   This bot uses the Real Time Event feed from Slack to watch for messages that invoke it and parse and insert the comment into the database.
-
-The project has 2 custom microservices:
-
-1. The `app` microservice which is the Flask app from the base project and has been extended to serve the `/comment` endpoint.
-
-2. The `slack-bot` microservice which watches the Real Time Events feed from Slack and responds to any message that invokes it. This microservice is not exposed to the outside world, i.e. there is no route corresponding to it in `conf/routes.yaml`.
-
-## Usage
-
-Make sure you insert the Slack API Token in the `env` section in `k8s.yaml` in each of `app` and `slack-bot`. Deploy the project using the standard `git push` method.
+#### TODO: Add screenshot based guide here.
