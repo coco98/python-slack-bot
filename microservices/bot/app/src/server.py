@@ -8,11 +8,6 @@ import pprint
 def event():
     try:
         data = request.form
-
-        print ("===============================================================");
-        somedata = request.get_data()
-        datajson = json.loads(somedata.decode())
-        print (json.dumps(datajson))        
         print ("===============================================================");
         print (data)
         print ("===============================================================")
