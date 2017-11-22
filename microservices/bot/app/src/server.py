@@ -7,7 +7,7 @@ import pprint
 @app.route('/', methods=['POST'])
 def event():
     try:
-        data = request.form
+        data = request.form.to_dict()
         print ("===============================================================");
         print (data)
         print ("===============================================================")
