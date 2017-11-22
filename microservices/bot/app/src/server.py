@@ -13,9 +13,9 @@ def event():
         print ("===============================================================");
         print (DATA.decode());
         print ("===============================================================");
-        print (DATA.decode().token)
-        print ("===============================================================");
         output = json.loads(DATA.decode())
+        print (output)
+        print ("===============================================================");
         print("Topic Recieved: " + output["topic"]);
         receivedToken = output["token"]
         receivedTeamId = output["team_id"]
