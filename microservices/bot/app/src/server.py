@@ -36,7 +36,7 @@ def confirm():
     receivedToken = data["token"]
     if (receivedToken == token):
         if (data["actions"][len(data["actions"])-1]["value"] == "yes"):
-            fetchAndSend()
+            fetchAndSend(data["actions"][len(data["actions"])-1]["id"])
         else:
             return "Ok :confused:"
         
@@ -126,7 +126,7 @@ def fetchAndSend(id):
             ],
             "where": {
                 "id": {
-                    "$eq": "23"
+                    "$eq": id
                 }
             }
         }
