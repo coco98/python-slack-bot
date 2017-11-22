@@ -40,7 +40,7 @@ def confirm():
     receivedToken = data["token"]
     channel = data["channel"]["id"]
     if (receivedToken == slackToken):
-        if ("value" in data["actions"][len(data["actions"])-1]):
+        if (data["actions"][len(data["actions"])-1]["value"] != 0):
             fetchAndSend(data["actions"][len(data["actions"])-1]["value"], channel)
             return "Message Sent"
         else:
@@ -69,6 +69,7 @@ def sendChoice(id, responseUrl):
                         "name": "no",
                         "text": "Nope",
                         "type": "button",
+                        "value": 0
                     }
                 ]
             }
