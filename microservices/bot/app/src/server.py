@@ -72,7 +72,7 @@ def sendConfirmation(id, responseUrl):
     response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
     print(response.text)
 
-def storeMsgToDB(text, responseUrl):
+def storeMsgToDB(text):
     url = "http://data.hasura/v1/query"
 
     requestPayload = {
