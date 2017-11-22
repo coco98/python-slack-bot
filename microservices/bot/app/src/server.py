@@ -26,7 +26,7 @@ def test():
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
-    data = request.form
+    data = request.form.to_dict()
     print ("================")
     print (data)
     print ("================")
