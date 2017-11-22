@@ -2,6 +2,7 @@ from src import app
 from flask import jsonify, request
 import requests
 import json
+import pprint
 
 @app.route('/', methods=['POST'])
 def event():
@@ -9,7 +10,9 @@ def event():
         data = request.form
 
         print ("===============================================================");
-        print (request.json)
+        print (request.pprint)
+        print ("===============================================================");
+        print (json.dumps(request.get_data()))        
         print ("===============================================================");
         print (data)
         print ("===============================================================")
