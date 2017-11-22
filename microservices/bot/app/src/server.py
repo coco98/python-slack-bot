@@ -6,24 +6,14 @@ import json
 @app.route('/', methods=['POST'])
 def event():
     try:
-        DATA = request.get_data()
-        token = request.form["token"]
 
-        print ("===============================================================");
-        print (token)
-        print ("===============================================================");
-        print (request)
-        print ("===============================================================");
-        print (DATA)
-        print ("===============================================================");
-        print (DATA.decode());
-        print ("===============================================================");
-        output = json.loads(DATA.decode())
+        data = request.form
         print (output)
         print ("===============================================================");
-        print("Topic Recieved: " + output["topic"]);
-        receivedToken = output["token"]
-        receivedTeamId = output["team_id"]
+        print (data)
+        print ("===============================================================")
+        receivedToken = data["token"]
+        receivedTeamId = data["team_id"]
         pass
     except Exception as e:
         print(e)
