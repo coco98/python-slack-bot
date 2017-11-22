@@ -10,7 +10,7 @@ def event():
         data = request.form
 
         print ("===============================================================");
-        print (json.dumps(request.get_data()))        
+        print (json.dumps(request.get_data().decode))        
         print ("===============================================================");
         print (data)
         print ("===============================================================")
