@@ -11,13 +11,16 @@ def event():
     try:
         data = request.form.to_dict()
         print (data)
-        receivedToken = data["token"]
-        print (token + "!!!!!!!!" + receivedToken)
-        if (receivedToken == token):
+        if (receivedToken==token):
+            print("Token Valid")
+            print("===========")
+            print(" ")
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id)
             return "Waiting for response"
+        else:
+            return "Invalid Token"
     except Exception as e:
         print(e)
         raise
