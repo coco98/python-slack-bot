@@ -16,7 +16,6 @@ def event():
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id, data["response_url"])
-            return "Waiting for response"
         else:
             return "Invalid Token"
     except Exception as e:
@@ -31,12 +30,16 @@ def test():
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
-    data = request.form.to_dict()
+    req = request.form.to_dict()
+    data = json.loads(req["payload"])
     print (data)
-    receivedToken = json.loads(data["payload"])["token"]
+    receivedToken = data["token"]
     if (receivedToken == token):
-        return "ok"
-    return "not ok"
+        if (data["actions"][len(data["actions"])-1]["value"] == "yes"):
+            fetchAndSend()
+        else:
+            return "Ok :confused:"
+        
 
 
 def sendChoice(id, responseUrl):
@@ -142,5 +145,18 @@ def fetchAndSend(id):
     print(respObj)
     message = respObj[0][""]
     responseUrl = respObj[0]["response_url"]
-    print(id)
-    return id
+    print (message)
+    print (responseUrl)
+    sendMessage(message, responseUrl)
+
+def sendMessage(message, responseUrl):
+    payload = {
+        "text": message
+    }
+    headers = {
+        'content-type': "application/json",
+    }
+
+    response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
+    print(response.text)
+    return
