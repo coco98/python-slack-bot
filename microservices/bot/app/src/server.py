@@ -160,4 +160,4 @@ def sendMessage(message, responseUrl):
 
     response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
     print(response.text)
-    return
+    return "Message Sent"
