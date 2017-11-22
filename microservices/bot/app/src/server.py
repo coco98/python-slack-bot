@@ -83,7 +83,7 @@ def storeText(text, responseUrl):
             "objects": [
                 {
                     "message": text,
-                    "response_url": response_url
+                    "response_url": responseUrl
                 }
             ],
             "returning": [
