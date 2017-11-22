@@ -10,9 +10,10 @@ token = os.environ['SLACK_TOKEN']
 def event():
     try:
         data = request.form.to_dict()
-        print (data)
+        print(data)
         receivedToken = data["token"]
         if (receivedToken==token):
+            print("TOken Valid")
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id)
