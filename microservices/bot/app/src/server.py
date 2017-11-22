@@ -3,7 +3,7 @@ from flask import jsonify, request
 import requests
 import json
 
-@app.route("/")
+@app.route('/', methods=['POST'])
 def event():
     try:
         DATA = request.get_data()
@@ -19,3 +19,7 @@ def event():
         print(e)
         raise
     return("OK")
+
+@app.route('/test', methods=['GET'])
+def test():
+    return "Running"
