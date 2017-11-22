@@ -13,49 +13,39 @@ def test():
 
 @app.route('/', methods=['POST'])
 def event():
-    try:
-        data = request.form.to_dict()
-        print(data)
-        receivedToken = data["token"]
-        if (receivedToken==slackToken):
-            receivedText= data["text"]
-            id = storeText(receivedText, data["response_url"])
-            sendChoice(id, data["response_url"])
-            return "Waiting for response"
-        else:
-            return "Invalid Token"
-    except Exception as e:
-        print(e)
-        raise
-    
-    return "ok"
+    data = request.form.to_dict()
+    print(data)
+    receivedToken = data["token"]
+    if (receivedToken==slackToken):
+        receivedText= data["text"]
+        id = storeMsgToDB(receivedText)
+        sendConfirmation(id, data["response_url"])
+        return "Waiting for response"
+    else:
+        return "Invalid Token"
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
     req = request.form.to_dict()
     data = json.loads(req["payload"])
-    print("===============================")
     print (data)
-    print("===============================")
     receivedToken = data["token"]
     channel = data["channel"]["id"]
     if (receivedToken == slackToken):
-        if (data["actions"][len(data["actions"])-1]["value"] != "0"):
-            fetchAndSend(data["actions"][len(data["actions"])-1]["value"], channel)
+        if (data["actions"][0]["value"] == "yes"):
+            fetchAndSend(data["callback_id"], channel)
             return "Message Sent"
         else:
-            return "Ok :confused:"
-        
+            return "Ok. Not sending. :confused:"
 
-
-def sendChoice(id, responseUrl):
+def sendConfirmation(id, responseUrl):
     payload = {
         "text": "Are you sure you want to send a message?",
         "attachments": [
             {
                 "text": "Please decide",
                 "fallback": "You are indecisive",
-                "callback_id": "message_confirmation",
+                "callback_id": id,
                 "color": "#3AA3E3",
                 "attachment_type": "default",
                 "actions": [
@@ -63,13 +53,13 @@ def sendChoice(id, responseUrl):
                         "name": "yes",
                         "text": "Yep",
                         "type": "button",
-                        "value": id
+                        "value": "yes"
                     },
                     {
                         "name": "no",
                         "text": "Nope",
                         "type": "button",
-                        "value": 0
+                        "value": "no"
                     }
                 ]
             }
@@ -82,7 +72,7 @@ def sendChoice(id, responseUrl):
     response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
     print(response.text)
 
-def storeText(text, responseUrl):
+def storeMsgToDB(text, responseUrl):
     url = "http://data.hasura/v1/query"
 
     requestPayload = {
@@ -92,7 +82,6 @@ def storeText(text, responseUrl):
             "objects": [
                 {
                     "message": text,
-                    "response_url": responseUrl
                 }
             ],
             "returning": [
@@ -113,7 +102,6 @@ def storeText(text, responseUrl):
     respObj = resp.json()
     print(respObj)
     id = respObj["returning"][0]["id"]
-    print(id)
     return id
 
 def fetchAndSend(id, channel):
@@ -125,7 +113,6 @@ def fetchAndSend(id, channel):
             "table": "slack_messages",
             "columns": [
                 "message",
-                "response_url"
             ],
             "where": {
                 "id": {
@@ -147,9 +134,6 @@ def fetchAndSend(id, channel):
     respObj = resp.json()
     print(respObj)
     message = respObj[0]["message"]
-    responseUrl = respObj[0]["response_url"]
-    print (message)
-    print (responseUrl)
     sendMessage(message, channel)
 
 def sendMessage(message, channel):
@@ -165,5 +149,4 @@ def sendMessage(message, channel):
     }
 
     response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-    print(response.text)
-    return "Message Sent"
+    print(response.json())
