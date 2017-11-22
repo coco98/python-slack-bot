@@ -5,15 +5,15 @@ import json
 
 @app.route("/")
 def event():
-	try:
+    try:
         DATA = request.get_data()
         print ("===============================================================");
         print (DATA.decode());
         print ("===============================================================");
         output = json.loads(DATA.decode())
         print("Topic Recieved: " + output["topic"]);
-       	receivedToken = output["token"]
-       	receivedTeamId = output["team_id"]
+        receivedToken = output["token"]
+        receivedTeamId = output["team_id"]
         pass
     except Exception as e:
         print(e)
