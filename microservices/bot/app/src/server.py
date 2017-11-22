@@ -37,8 +37,8 @@ def confirm():
     print("===============================")
     receivedToken = data["token"]
     if (receivedToken == token):
-        if (data["actions"][len(data["actions"])-1]["value"][0] == "y"):
-            fetchAndSend(data["actions"][len(data["actions"])-1]["value"][1:])
+        if (data["actions"][len(data["actions"])-1]["value"]):
+            fetchAndSend(data["actions"][len(data["actions"])-1]["value"])
         else:
             return "Ok :confused:"
         
