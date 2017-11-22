@@ -23,6 +23,12 @@ def event():
 def test():
     return "Running"
 
+@app.route('/confirm', methods=['POST'])
+def confirm():
+    data = request.form
+    print (data)
+    return ok
+
 def sendChoice():
     url = "https://hooks.slack.com/services/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"
     choiceResponse = "{\n        \"text\": \"Are you freaking serious you want to send this message?\",\n        \"attachments\": [\n            {\n                \"text\": \"Please decide\",\n                \"fallback\": \"You are unable to choose a game\",\n                \"callback_id\": \"wopr_game\",\n                \"color\": \"#3AA3E3\",\n                \"attachment_type\": \"default\",\n                \"actions\": [\n                    {\n                        \"confirm\": {\n                            \"title\": \"Are you sure?\",\n                            \"text\": \"Are you really sure?\",\n                            \"ok_text\": \"Yes\",\n                            \"dismiss_text\": \"No\"\n                        }\n                    }\n                ]\n            }\n        ]\n    }"
