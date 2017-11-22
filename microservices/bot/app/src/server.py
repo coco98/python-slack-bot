@@ -32,7 +32,9 @@ def test():
 def confirm():
     req = request.form.to_dict()
     data = json.loads(req["payload"])
+    print("===============================")
     print (data)
+    print("===============================")
     receivedToken = data["token"]
     if (receivedToken == token):
         if (data["actions"][len(data["actions"])-1]["value"] == "yes"):
