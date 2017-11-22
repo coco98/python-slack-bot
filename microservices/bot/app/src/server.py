@@ -27,7 +27,7 @@ def test():
 def confirm():
     data = request.form
     print (data)
-    return ok
+    return something
 
 def sendChoice():
     url = "https://hooks.slack.com/services/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"
