@@ -6,6 +6,10 @@ import os
 
 token = os.environ['SLACK_TOKEN']
 
+@app.route('/test', methods=['GET'])
+def test():
+    return "Slackbot is running"
+
 @app.route('/', methods=['POST'])
 def event():
     try:
@@ -16,6 +20,7 @@ def event():
             receivedText= data["text"]
             id = storeText(receivedText, data["response_url"])
             sendChoice(id, data["response_url"])
+            return "Waiting for response"
         else:
             return "Invalid Token"
     except Exception as e:
@@ -23,10 +28,6 @@ def event():
         raise
     
     return "ok"
-
-@app.route('/test', methods=['GET'])
-def test():
-    return "Running"
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
@@ -39,6 +40,7 @@ def confirm():
     if (receivedToken == token):
         if ("value" in data["actions"][len(data["actions"])-1]):
             fetchAndSend(data["actions"][len(data["actions"])-1]["value"])
+            return "Message Sent"
         else:
             return "Ok :confused:"
         
@@ -78,7 +80,6 @@ def sendChoice(id, responseUrl):
 
     response = requests.request("POST", responseUrl, data=json.dumps(payload), headers=headers)
     print(response.text)
-    return
 
 def storeText(text, responseUrl):
     url = "http://data.hasura/v1/query"
