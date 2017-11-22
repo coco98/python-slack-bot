@@ -2,7 +2,7 @@ from src import app
 from flask import jsonify, request
 import requests
 import json
-import pprint
+import os
 
 token = os.environ['SLACK_TOKEN']
 
