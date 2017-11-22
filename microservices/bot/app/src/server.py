@@ -160,6 +160,7 @@ def sendMessage(message, channel):
     }
     headers = {
         'content-type': "application/json",
+        'Authorization': 'Bearer '+botAccessToken
     }
 
     response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
