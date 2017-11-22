@@ -33,10 +33,10 @@ def test():
 def confirm():
     data = request.form.to_dict()
     print (data)
-    receivedToken = data["payload"]["token"]
+    receivedToken = json.loads(data["payload"])["token"]
     if (receivedToken == token):
         return "ok"
-    return "ok"
+    return "not ok"
 
 
 def sendChoice(id, responseUrl):
@@ -107,5 +107,40 @@ def storeText(text, responseUrl):
     respObj = resp.json()
     print(respObj)
     id = respObj["returning"][0]["id"]
+    print(id)
+    return id
+
+def fetchAndSend(id):
+    url = "http://data.hasura/v1/query"
+
+    requestPayload = {
+        "type": "select",
+        "args": {
+            "table": "slack_messages",
+            "columns": [
+                "message",
+                "response_url"
+            ],
+            "where": {
+                "id": {
+                    "$eq": "23"
+                }
+            }
+        }
+    }
+
+    # Setting headers
+    headers = {
+        "Content-Type": "application/json",
+        "X-Hasura-User-Id": "1",
+        "X-Hasura-Role": "admin"
+    }
+
+    # Make the query and store response in resp
+    resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+    respObj = resp.json()
+    print(respObj)
+    message = respObj[0][""]
+    responseUrl = respObj[0]["response_url"]
     print(id)
     return id
