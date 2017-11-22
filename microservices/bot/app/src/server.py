@@ -4,5 +4,18 @@ import requests
 import json
 
 @app.route("/")
-def hello():
-    return json.dumps({"message":"Hello World! I live."})
+def event():
+	try:
+        DATA = request.get_data()
+        print ("===============================================================");
+        print (DATA.decode());
+        print ("===============================================================");
+        output = json.loads(DATA.decode())
+        print("Topic Recieved: " + output["topic"]);
+       	receivedToken = output["token"]
+       	receivedTeamId = output["team_id"]
+        pass
+    except Exception as e:
+        print(e)
+        raise
+    return("OK")
