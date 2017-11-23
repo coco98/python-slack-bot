@@ -48,7 +48,7 @@ It will also reply to the user asking the user to confirm if the user wants to p
 #### 2. Interactive message callback request URL
 
 ```http
-POST /echo
+POST /confirm
 Content-Type application/x-www-form-urlencoded
 
 payload=
@@ -91,17 +91,21 @@ This structure is based on: [https://api.slack.com/docs/message-buttons](https:/
 
 ![CreateApp](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/create_app.png)
 
+
 - On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.cluster-name.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
 
 ![AddCommand](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_command.png)
+
 
 - Click on Bots and add a bot user. Name it whatever you like.
 
 ![AddBot](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_bot.png)
 
+
 - Go to `OAuth and Permissions` in the panel on the left. Scroll down to scopes and add the following permission scope.
 
 ![Scope](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/scope.png)
+
 
 - Scroll up and install the app to your workspace. Once it is installed, you will see a bot access token. Copy this token and add it to your secrets (since you do not want to expose the token explicitly in your code).
 
@@ -113,6 +117,7 @@ $ hasura secret update bot.access.token <bot_access_token>
 *verification token*. Add this to your secrets as well
 
 ![app_creds](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/app_creds.png)
+
 
 ```
 $ hasura secret update slack.token <verification_token>
