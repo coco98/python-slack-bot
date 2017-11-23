@@ -1,18 +1,22 @@
 # python-slack-bot
 
+**This is slackbot you will have:**
 ![](https://media.giphy.com/media/26u8yqs5WE4bINd3W/giphy.gif)
 
-This is a simple slackbot that responds to slash commands and uses message buttons.
-
-This is the easiest and fastest way to deploy a slackbot because slack callbacks require
-HTTPS URLs with valid SSL certificates, which Hasura generates automatically :)
+This is a simple slackbot that responds to slash commands and uses message buttons. It allows users on a channel to post messages to the channel.
 
 Features:
 
-1. Receive command
-2. Insert command data in the database using the Hasura data APIs
-3. Echo the same output as a message only the user can see, with a confirm message button
-4. If the user clicks on the confirm button, display the message to the whole channel
+1. Receive command: `/anonbot here's a message for the channel sent from an anonymous team member`
+2. Save the command data in the database (uses Hasura data APIs)
+3. Ask the slack user to confirm if they want to post their message
+4. If the user clicks on the confirm button, post the message to the channel as the bot so that everyone can see
+
+Reasons why this is the best way to get started with a basic slackbot:
+
+1. This is a small but perfect example of how to implement a bot that accepts commands
+2. The bot asks users for their confirmation and is a good starting point for implementing interactive commands/messages/buttons in slackbots
+3. Slack requires all bots to have API callbacks on HTTPS. This project can be deployed on a free Hasura cluster in one command which auto-generates certified free SSL certificates (LetsEncrypt FTW) :)
 
 You can make trivial modifications to the code to make the bot work as you wish.
 
@@ -36,8 +40,8 @@ This slack bot builds on top the following slack APIs:
  channel_name=test
  user_id=U2147483697
  user_name=Steve
- command=/weather
- text=94070
+ command=/anonbot
+ text=here's a message for the channel sent from an anonymous team member
  ```
 
 As taken from: [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
@@ -51,41 +55,12 @@ It will also reply to the user asking the user to confirm if the user wants to p
 POST /confirm
 Content-Type application/x-www-form-urlencoded
 
-payload=
-{
-  "actions": [
-    {
-      "name": "recommend",
-      "value": "recommend",
-      "type": "button"
-    }
-  ],
-  "callback_id": "comic_1234_xyz",
-  "team": {
-    "id": "T47563693",
-    "domain": "watermelonsugar"
-  },
-  "channel": {
-    "id": "C065W1189",
-    "name": "forgotten-works"
-  },
-  "user": {
-    "id": "U045VRZFT",
-    "name": "brautigan"
-  },
-  "action_ts": "1458170917.164398",
-  "message_ts": "1458170866.000004",
-  "attachment_id": "1",
-  "token": "xAB3yVzGS4BQ3O9FACTa8Ho4",
-  "original_message": {"text":"New comic book alert!","attachments":[{"title":"The Further Adventures of Slackbot","fields":[{"title":"Volume","value":"1","short":true},{"title":"Issue","value":"3","short":true}],"author_name":"Stanford S. Strickland","author_icon":"https://api.slack.comhttps://a.slack-edge.com/bfaba/img/api/homepage_custom_integrations-2x.png","image_url":"http://i.imgur.com/OJkaVOI.jpg?1"},{"title":"Synopsis","text":"After @episod pushed exciting changes to a devious new branch back in Issue 1, Slackbot notifies @don about an unexpected deploy..."},{"fallback":"Would you recommend it to customers?","title":"Would you recommend it to customers?","callback_id":"comic_1234_xyz","color":"#3AA3E3","attachment_type":"default","actions":[{"name":"recommend","text":"Recommend","type":"button","value":"recommend"},{"name":"no","text":"No","type":"button","value":"bad"}]}]},
-  "response_url": "https://hooks.slack.com/actions/T47563693/6204672533/x7ZLaiVMoECAW50Gw1ZYAXEM",
-  "trigger_id": "13345224609.738474920.8088930838d88f008e0"
-}
+payload={..JSON payload describing whether the user confirmed to post the message...}
 ```
 
-This structure is based on: [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
+This is based on: [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
 
-### Guide to get it running
+### Deployment guide
 
 - Quickstart the project from Hasura hub.
 ```
