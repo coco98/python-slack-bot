@@ -36,7 +36,7 @@ def confirm():
     if (receivedToken == slackToken):
         if (data["actions"][0]["value"] == "yes"):
             message = fetchAndSend(data["callback_id"], channel)
-            return "Message Sent: "+message
+            return ("Message Sent: " + str(message))
         else:
             return "Ok. Not sending. :confused:"
 
