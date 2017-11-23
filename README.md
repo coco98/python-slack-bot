@@ -1,5 +1,7 @@
 # python-slack-bot
 
+![GIF](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/slackbot_gif.png)
+
 This is a simple slackbot that responds to slash commands and uses message buttons.
 
 This is the easiest and fastest way to deploy a slackbot because slack callbacks require
@@ -19,9 +21,6 @@ This slack bot builds on top the following slack APIs:
 1. [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
 2. [https://api.slack.com/interactive-messages](https://api.slack.com/interactive-messages)
 3. [https://api.slack.com/methods/chat.postMessage](https://api.slack.com/methods/chat.postMessage)
-
-
-#### TODO: Add flowchart diagram here
 
 ### Callbacks
 
