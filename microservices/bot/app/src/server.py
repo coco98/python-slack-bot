@@ -13,7 +13,7 @@ chatUrl = "https://slack.com/api/chat.postMessage"
 
 @app.route('/', methods=['GET'])
 def test():
-    return "Slackbot is running"
+    return "Slackbot is running."
 
 @app.route('/echo', methods=['POST'])
 def event():
