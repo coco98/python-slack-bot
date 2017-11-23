@@ -6,14 +6,14 @@
 
 This is a simple slackbot that responds to slash commands and uses message buttons. It allows users on a channel to post messages to the channel.
 
-Features:
+**Features**:
 
 1. Receive command: `/anonbot here's a message for the channel sent from an anonymous team member`
 2. Save the command data in the database (uses Hasura data APIs)
 3. Ask the slack user to confirm if they want to post their message
 4. If the user clicks on the confirm button, post the message to the channel as the bot so that everyone can see
 
-Reasons why this is the best way to get started with a basic slackbot:
+**Why this is the best way to get started with a slackbot**:
 
 1. This is a small but perfect example of how to implement a bot that accepts commands
 2. The bot asks users for their confirmation and is a good starting point for implementing interactive commands/messages/buttons in slackbots
