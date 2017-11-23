@@ -6,21 +6,23 @@ import os
 
 slackToken = os.environ['SLACK_TOKEN']
 botAccessToken = os.environ['BOT_ACCESS_TOKEN']
+hasuraDataUrl = "http://data.hasura/v1/query"
+chatUrl = "https://slack.com/api/chat.postMessage"
 
-@app.route('/test', methods=['GET'])
+@app.route('/', methods=['GET'])
 def test():
     return "Slackbot is running"
 
-@app.route('/', methods=['POST'])
+@app.route('/echo', methods=['POST'])
 def event():
     data = request.form.to_dict()
     print(data)
     receivedToken = data["token"]
     if (receivedToken==slackToken):
-        receivedText= data["text"]
-        id = storeMsgToDB(receivedText)
-        sendConfirmation(id, data["response_url"])
-        return "Waiting for response"
+        receivedMessage= data["text"]
+        id = storeMsgToDB(receivedMessage)
+        sendConfirmation(id, receivedMessage, data["response_url"])
+        return "Waiting for confirmation"
     else:
         return "Invalid Token"
 
@@ -33,17 +35,17 @@ def confirm():
     channel = data["channel"]["id"]
     if (receivedToken == slackToken):
         if (data["actions"][0]["value"] == "yes"):
-            fetchAndSend(data["callback_id"], channel)
-            return "Message Sent"
+            message = fetchAndSend(data["callback_id"], channel)
+            return "Message Sent: "+message
         else:
             return "Ok. Not sending. :confused:"
 
-def sendConfirmation(id, responseUrl):
+def sendConfirmation(id, message, responseUrl):
     payload = {
         "text": "Are you sure you want to send a message?",
         "attachments": [
             {
-                "text": "Please decide",
+                "text": '"'+message+'"',
                 "fallback": "You are indecisive",
                 "callback_id": id,
                 "color": "#3AA3E3",
@@ -73,7 +75,6 @@ def sendConfirmation(id, responseUrl):
     print(response.text)
 
 def storeMsgToDB(text):
-    url = "http://data.hasura/v1/query"
 
     requestPayload = {
         "type": "insert",
@@ -98,14 +99,13 @@ def storeMsgToDB(text):
     }
 
     # Make the query and store response in resp
-    resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+    resp = requests.request("POST", hasuraDataUrl, data=json.dumps(requestPayload), headers=headers)
     respObj = resp.json()
     print(respObj)
     id = respObj["returning"][0]["id"]
     return id
 
 def fetchAndSend(id, channel):
-    url = "http://data.hasura/v1/query"
 
     requestPayload = {
         "type": "select",
@@ -130,14 +130,13 @@ def fetchAndSend(id, channel):
     }
 
     # Make the query and store response in resp
-    resp = requests.request("POST", url, data=json.dumps(requestPayload), headers=headers)
+    resp = requests.request("POST", hasuraDataUrl, data=json.dumps(requestPayload), headers=headers)
     respObj = resp.json()
     print(respObj)
     message = respObj[0]["message"]
     sendMessage(message, channel)
 
 def sendMessage(message, channel):
-    url = "https://slack.com/api/chat.postMessage"
     payload = {
         "token": botAccessToken,
         "text": message,
@@ -148,5 +147,6 @@ def sendMessage(message, channel):
         'Authorization': 'Bearer '+botAccessToken
     }
 
-    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+    response = requests.request("POST", chatUrl, data=json.dumps(payload), headers=headers)
     print(response.json())
+    return message
