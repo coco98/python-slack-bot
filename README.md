@@ -2,7 +2,7 @@
 
 This is a simple slackbot that responds to slash commands and uses message buttons.
 
-This is the fastest way to deploy a slackbot because slack callbacks require
+This is the easiest and fastest way to deploy a slackbot because slack callbacks require
 HTTPS URLs with valid SSL certificates, which Hasura generates automatically :)
 
 Features:
@@ -12,11 +12,13 @@ Features:
 3. Echo the same output as a message only the user can see, with a confirm message button
 4. If the user clicks on the confirm button, display the message to the whole channel
 
+You can make trivial modifications to the code to make the bot work as you wish.
+
 This slack bot builds on top the following slack APIs:
 
 1. [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
-2. [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
-3. [https://api.slack.com/interactive-messages](https://api.slack.com/interactive-messages)
+2. [https://api.slack.com/interactive-messages](https://api.slack.com/interactive-messages)
+3. [https://api.slack.com/methods/chat.postMessage](https://api.slack.com/methods/chat.postMessage)
 
 
 #### TODO: Add flowchart diagram here
@@ -46,7 +48,7 @@ It will also reply to the user asking the user to confirm if the user wants to p
 
 #### 2. Interactive message callback request URL
 
- ```http
+```http
 POST /echo
 Content-Type application/x-www-form-urlencoded
 
@@ -84,6 +86,36 @@ payload=
 
 This structure is based on: [https://api.slack.com/docs/message-buttons](https://api.slack.com/docs/message-buttons)
 
-### Slack configuration required
+### Guide to get it running
 
-#### TODO: Add screenshot based guide here.
+#### Create a [Slack app](https://api.slack.com/slack-apps). Name it whatever you want. Choose the workspace you want to run it in. 
+
+[Image]
+
+#### On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.<cluster-name>.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
+
+[Image]
+
+#### Click on Bots and create a bot user. Name it whatever you like.
+
+[Image]
+
+#### Go to `OAuth and Permissions` in the panel on the left. Scroll down to scopes and add the following permission scope.
+
+[Image]
+
+#### Scroll up and install the app to your workspace. Once it is installed, you will see a bot access token. Copy this token and add it to your secrets (since you do not want to expose the token explicitly in your code).
+
+```
+$ hasura secret update bot.access.token <bot_access_token>
+```
+
+#### Go to `Basic Information` in the panel on the left. Scroll down to App credentials. Copy the 
+*verification token*. Add this to your secrets as well
+
+[Image]
+
+```
+$ hasura secret update slack.token <verification_token>
+```
+
