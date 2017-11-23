@@ -1,6 +1,6 @@
 # python-slack-bot
 
-![GIF](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/slackbot_gif.png)
+![GIF](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/slackbot_gif.gif)
 
 This is a simple slackbot that responds to slash commands and uses message buttons.
 
