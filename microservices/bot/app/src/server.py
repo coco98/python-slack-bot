@@ -9,6 +9,8 @@ botAccessToken = os.environ['BOT_ACCESS_TOKEN']
 hasuraDataUrl = "http://data.hasura/v1/query"
 chatUrl = "https://slack.com/api/chat.postMessage"
 
+##################### APIs ######################
+
 @app.route('/', methods=['GET'])
 def test():
     return "Slackbot is running"
@@ -41,6 +43,9 @@ def confirm():
             return ("Message Sent: " + str(message))
         else:
             return "Ok. Not sending. :confused:"
+
+
+##################### Utility functions ######################
 
 def sendConfirmation(id, message, responseUrl):
     payload = {
@@ -77,7 +82,6 @@ def sendConfirmation(id, message, responseUrl):
     print(response.text)
 
 def storeMsgToDB(text):
-
     requestPayload = {
         "type": "insert",
         "args": {
@@ -108,7 +112,6 @@ def storeMsgToDB(text):
     return id
 
 def fetchAndSend(id, channel):
-
     requestPayload = {
         "type": "select",
         "args": {
