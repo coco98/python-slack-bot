@@ -26,28 +26,24 @@ This slack bot builds on top the following slack APIs:
 2. [https://api.slack.com/interactive-messages](https://api.slack.com/interactive-messages)
 3. [https://api.slack.com/methods/chat.postMessage](https://api.slack.com/methods/chat.postMessage)
 
-### Callbacks
+### Codebase structure
+
+All of the code is in one file that you can read at: `microservices/bot/app/src/server.py`
 
 #### 1. slash command callback request URL
  ```http
  POST /echo
  Content-Type application/x-www-form-urlencoded
 
- token=gIkuvaNzQIHg97ATvDxqgjtO
- team_id=T0001
- team_domain=example
- channel_id=C2147483705
- channel_name=test
- user_id=U2147483697
- user_name=Steve
  command=/anonbot
  text=here's a message for the channel sent from an anonymous team member
+ ...
  ```
 
 As taken from: [https://api.slack.com/custom-integrations/slash-commands](https://api.slack.com/custom-integrations/slash-commands)
 
 This callback will take the message text and save it in the database.
-It will also reply to the user asking the user to confirm if the user wants to paste the to everyone in the current channel
+It will also reply to the user asking the user to confirm if the user wants to paste the to everyone in the current channel.
 
 #### 2. Interactive message callback request URL
 
@@ -114,4 +110,4 @@ $ git commit -m "First commit"
 $ git push hasura master
 ```
 
-You can test your app in your channels :D
+You can test your app in your channels. :D
