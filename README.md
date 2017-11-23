@@ -90,19 +90,19 @@ This structure is based on: [https://api.slack.com/docs/message-buttons](https:/
 
 - Create a [Slack app](https://api.slack.com/slack-apps). Name it whatever you want. Choose the workspace you want to run it in. 
 
-![CreateApp](https://github.com/coco98/python-slack-bot/tree/master/readme-assets/create_app.png)
+![CreateApp](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/create_app.png)
 
 - On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.<cluster-name>.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
 
-![AddCommand](https://github.com/coco98/python-slack-bot/tree/master/readme-assets/add_command.png)
+![AddCommand](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_command.png)
 
 - Click on Bots and add a bot user. Name it whatever you like.
 
-![AddBot](https://github.com/coco98/python-slack-bot/tree/master/readme-assets/add_bot.png)
+![AddBot](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_bot.png)
 
 - Go to `OAuth and Permissions` in the panel on the left. Scroll down to scopes and add the following permission scope.
 
-![Scope](https://github.com/coco98/python-slack-bot/tree/master/readme-assets/scope.png)
+![Scope](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/scope.png)
 
 - Scroll up and install the app to your workspace. Once it is installed, you will see a bot access token. Copy this token and add it to your secrets (since you do not want to expose the token explicitly in your code).
 
