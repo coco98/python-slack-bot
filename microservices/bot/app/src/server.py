@@ -39,7 +39,7 @@ def confirm():
     channel = data["channel"]["id"]
     if (receivedToken == slackToken):
         if (data["actions"][0]["value"] == "yes"):
-            message = fetchAndSend(data["callback_id"], channel)
+            message = fetchFromDBAndSend(data["callback_id"], channel)
             return ("Message Sent: " + str(message))
         else:
             return "Ok. Not sending. :confused:"
@@ -82,6 +82,24 @@ def sendConfirmation(id, message, responseUrl):
     print(response.text)
 
 def storeMsgToDB(text):
+    """
+        This function stores 'text' in the database, and
+        takes note of the auto-generated unique id for the message.
+
+        The table it stores it in is:
+        +-------------------------+----------------+
+        | id (auto-increment int) | message (text) |
+        +-------------------------+----------------+
+
+        Instead of contacting the postgres database directly 
+        this function uses the Hasura Data APIs.
+
+        Try out the data APIs by running this from your terminal:
+        $ hasura api-console
+
+        Use the query builder and the API explorer to try out the
+        data APIs.
+    """
     requestPayload = {
         "type": "insert",
         "args": {
@@ -111,7 +129,24 @@ def storeMsgToDB(text):
     id = respObj["returning"][0]["id"]
     return id
 
-def fetchAndSend(id, channel):
+def fetchFromDBAndSend(id, channel):
+    """
+        This function fetches the stored message from the database.
+
+        The table it fetches from is:
+        +-------------------------+----------------+
+        | id (auto-increment int) | message (text) |
+        +-------------------------+----------------+
+
+        Instead of contacting the postgres database directly
+        this function uses the Hasura Data APIs.
+
+        Try out the data APIs by running this from your terminal:
+        $ hasura api-console
+
+        Use the query builder and the API explorer to try out the
+        data APIs.
+    """
     requestPayload = {
         "type": "select",
         "args": {
@@ -139,9 +174,9 @@ def fetchAndSend(id, channel):
     respObj = resp.json()
     print(respObj)
     message = respObj[0]["message"]
-    return sendMessage(message, channel)
+    return sendSlackMessage(message, channel)
 
-def sendMessage(message, channel):
+def sendSlackMessage(message, channel):
     payload = {
         "token": botAccessToken,
         "text": message,
