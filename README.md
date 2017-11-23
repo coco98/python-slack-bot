@@ -92,7 +92,7 @@ This structure is based on: [https://api.slack.com/docs/message-buttons](https:/
 
 ![CreateApp](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/create_app.png)
 
-- On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.<cluster-name>.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
+- On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.cluster-name.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
 
 ![AddCommand](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_command.png)
 
