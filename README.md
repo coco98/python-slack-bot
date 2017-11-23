@@ -97,12 +97,15 @@ $ hasura quickstart coco98/python-slack-bot && cd python-slack-bot
 ![CreateApp](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/create_app.png)
 
 
-- On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.cluster-name.hasura-app.io. You can find your cluster name by running `$ hasura cluster status` from the project directory.
+- On creation, you will be taken to the app management page. Click on `slash commands` and create a command. Add the URL to be https://bot.cluster-name.hasura-app.io/echo . You can find your cluster name by running `$ hasura cluster status` from the project directory.
 
 ![AddCommand](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_command.png)
 
+- Go to `interactive components` in the panel on the left and enable interactive component. Add the URL as https://bot.cluster-name.hasura-app.io/confirm . Leave the options load URL empty.
 
-- Click on Bots and add a bot user. Name it whatever you like.
+![AddInteractive](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_interactive.png)
+
+- Go to `Basic Information` in the left panel and click on `Add features and functionality -> Bots`. Add a bot user and name it whatever you like.
 
 ![AddBot](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/add_bot.png)
 
