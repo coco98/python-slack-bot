@@ -134,7 +134,7 @@ def fetchAndSend(id, channel):
     respObj = resp.json()
     print(respObj)
     message = respObj[0]["message"]
-    sendMessage(message, channel)
+    return sendMessage(message, channel)
 
 def sendMessage(message, channel):
     payload = {
