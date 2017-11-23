@@ -1,4 +1,5 @@
 description: A slack bot demo on top of the hello-python-flask project
 keywords: python, slack, bot, slack-bot, flask
+media: {}
 name: python-slack-bot
 platformVersion: v0.15.3

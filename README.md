@@ -123,3 +123,12 @@ $ hasura secret update bot.access.token <bot_access_token>
 $ hasura secret update slack.token <verification_token>
 ```
 
+- Push these changes to your Hasura cluster.
+
+```
+$ git add .
+$ git commit -m "First commit"
+$ git push hasura master
+```
+
+You can test your app in your channels :D

@@ -17,7 +17,9 @@ def test():
 def event():
     data = request.form.to_dict()
     print(data)
+    print("SlackToken: " + slackToken)
     receivedToken = data["token"]
+    print("ReceivedToken: " + receivedToken)
     if (receivedToken==slackToken):
         receivedMessage= data["text"]
         id = storeMsgToDB(receivedMessage)
