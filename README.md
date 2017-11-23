@@ -113,7 +113,7 @@ $ hasura secret update bot.access.token <bot_access_token>
 - Go to `Basic Information` in the panel on the left. Scroll down to App credentials. Copy the 
 *verification token*. Add this to your secrets as well
 
-[Image]
+![app_creds](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/app_creds.png)
 
 ```
 $ hasura secret update slack.token <verification_token>
