@@ -64,7 +64,7 @@ This is based on: [https://api.slack.com/docs/message-buttons](https://api.slack
 $ hasura quickstart coco98/python-slack-bot && cd python-slack-bot
 ```
 
-- Create a [Slack app](https://api.slack.com/slack-apps). Name it whatever you want. Choose the workspace you want to run it in. 
+- Create a [Slack app](https://api.slack.com/slack-apps). Name it whatever you want. Choose the workspace you want to run it in.
 
 ![CreateApp](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/create_app.png)
 
@@ -93,7 +93,7 @@ $ hasura quickstart coco98/python-slack-bot && cd python-slack-bot
 $ hasura secret update bot.access.token <bot_access_token>
 ```
 
-- Go to `Basic Information` in the panel on the left. Scroll down to App credentials. Copy the 
+- Go to `Basic Information` in the panel on the left. Scroll down to App credentials. Copy the
 *verification token*. Add this to your secrets as well
 
 ![app_creds](https://github.com/coco98/python-slack-bot/raw/master/readme-assets/app_creds.png)
