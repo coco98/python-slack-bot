@@ -2,7 +2,6 @@ description: A slack bot demo on top of the hello-python-flask project
 keywords: python, slack, bot, slack-bot, flask
 media:
   images:
-    - https://media.giphy.com/media/26u8yqs5WE4bINd3W/giphy.gif
+  - https://media.giphy.com/media/26u8yqs5WE4bINd3W/giphy.gif
 name: python-slack-bot
 platformVersion: v0.15.3
-repoUrl: https://github.com/coco98/python-slack
