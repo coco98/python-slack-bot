@@ -4,4 +4,4 @@ media:
   images:
   - https://media.giphy.com/media/26u8yqs5WE4bINd3W/giphy.gif
 name: python-slack-bot
-platformVersion: v0.15.3
+platformVersion: v0.15.18
