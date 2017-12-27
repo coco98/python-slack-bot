@@ -1,4 +1,4 @@
-# python-slack-bot
+# slack-anonymous-bot 
 
 **This is slackbot you will have:**
 
@@ -112,3 +112,7 @@ $ git push hasura master
 ```
 
 You can test your app in your channels. :D
+
+## Support
+
+If you happen to get stuck anywhere, please feel free to mail me at tanmaig@gmail.com. Also, if you find an error or a bug, you can raise an issue [here](https://github.com/coco98/python-slack-bot).
