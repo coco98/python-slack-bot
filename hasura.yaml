@@ -3,5 +3,5 @@ keywords: python, slack, bot, slack-bot, flask, chatbot, anonymous-bot
 media:
   images:
   - https://media.giphy.com/media/26u8yqs5WE4bINd3W/giphy.gif
-name: slack-anonymous-bot
+name: python-slack-bot
 platformVersion: v0.15.18
